@@ -2,7 +2,7 @@
 
 set -e
 
-CEPH_DIR=$(realpath ${CEPH_DIR:-"/srv/ceph"})
+CEPH_DIR=$(realpath "${CEPH_DIR:-"/srv/ceph"}")
 CEPH_CMAKE_ARGS="-DENABLE_GIT_VERSION=ON -DWITH_PYTHON3=3 -DWITH_CCACHE=ON ${CEPH_CMAKE_ARGS}"
 CEPH_CMAKE_ARGS="-DWITH_TESTS=OFF -DCMAKE_BUILD_TYPE=Release ${CEPH_CMAKE_ARGS}"
 CEPH_CMAKE_ARGS="-DWITH_RADOSGW_AMQP_ENDPOINT=OFF -DWITH_RADOSGW_KAFKA_ENDPOINT=OFF ${CEPH_CMAKE_ARGS}"
@@ -16,19 +16,19 @@ build_radosgw_binary() {
   echo "CEPH_DIR=${CEPH_DIR}"
   echo "NPROC=${NPROC}"
 
-  cd ${CEPH_DIR}
+  cd "${CEPH_DIR}"
 
   ./install-deps.sh || true
 
   if [ -d "build" ]; then
       cd build/
-      cmake -DBOOST_J=${NPROC} ${CEPH_CMAKE_ARGS} ..
+      cmake -DBOOST_J="${NPROC}" "${CEPH_CMAKE_ARGS}" ..
   else
-      ./do_cmake.sh ${CEPH_CMAKE_ARGS}
+      ./do_cmake.sh "${CEPH_CMAKE_ARGS}"
       cd build/
   fi
 
-  ninja -j${NPROC} bin/radosgw
+  ninja "-j${NPROC}" bin/radosgw
 }
 
 build_radosgw_binary

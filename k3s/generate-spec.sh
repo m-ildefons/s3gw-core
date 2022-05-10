@@ -15,7 +15,6 @@
 # limitations under the License.
 
 tgtfile="s3gw.yaml"
-is_dev_env=false
 
 s3gw_pod_yaml="s3gw-pod"
 
@@ -42,14 +41,14 @@ specs=(
   "longhorn-storageclass"
   "s3gw-namespace"
   "s3gw-pvc"
-  ${s3gw_pod_yaml}
+  "${s3gw_pod_yaml}"
   "s3gw-service"
   "s3gw-ingress"
 )
 
 d="$(date +'%Y/%M/%d %H:%m:%S %Z')"
 
-cat > ${tgtfile} << EOF
+cat > "${tgtfile}" << EOF
 # ${tgtfile} - setup a k3s cluster with longhorn and s3gw
 # Copyright 2022 SUSE, LLC.
 #
@@ -71,8 +70,8 @@ cat > ${tgtfile} << EOF
 EOF
 
 has_prior=false
-for spec in ${specs[@]}; do
-  ${has_prior} && echo "---" >> ${tgtfile}
+for spec in "${specs[@]}"; do
+  ${has_prior} && echo "---" >> "${tgtfile}"
   has_prior=true
-  cat ${spec}.yaml >> ${tgtfile}
+  cat "${spec}.yaml" >> "${tgtfile}"
 done

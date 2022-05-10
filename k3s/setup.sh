@@ -19,7 +19,7 @@ set -e
 ghraw="https://raw.githubusercontent.com"
 
 function error() {
-  echo "[ERROR] ${@}" >&2
+  echo "[ERROR] $*" >&2
 }
 
 function apply() {
@@ -31,7 +31,7 @@ function apply() {
     exit 1
 
   echo "Creating ${desc}..."
-  k3s kubectl apply -f ./${yaml} || (
+  k3s kubectl apply -f ./"${yaml}" || (
     error "Failed to create ${desc}."
     exit 1
   )
@@ -76,7 +76,7 @@ if $dev_env ; then
       exit 1
     fi
 
-    podman image save ${img} -o ./s3gw.ctr.tar || (
+    podman image save "${img}" -o ./s3gw.ctr.tar || (
       error "Failed to export s3gw image."
       exit 1
     )

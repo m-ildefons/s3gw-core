@@ -3,7 +3,7 @@
 set -e
 
 IMAGE_NAME=${IMAGE_NAME:-"s3gw"}
-CEPH_DIR=$(realpath ${CEPH_DIR:-"../../ceph/"})
+CEPH_DIR=$(realpath "${CEPH_DIR:-"../../ceph/"}")
 CONTAINER_ENGINE=${CONTAINER_ENGINE:-"podman"}
 
 registry=
@@ -13,10 +13,10 @@ build_container_image() {
   echo "Building container image ..."
   case ${CONTAINER_ENGINE} in
   podman)
-    podman build -t ${IMAGE_NAME} -f ./Dockerfile.build-container ${CEPH_DIR}/build
+    podman build -t "${IMAGE_NAME}" -f ./Dockerfile.build-container "${CEPH_DIR}/build"
     ;;
   docker)
-    docker build -t localhost/${IMAGE_NAME} -f ./Dockerfile.build-container ${CEPH_DIR}/build
+    docker build -t "localhost/${IMAGE_NAME}" -f ./Dockerfile.build-container "${CEPH_DIR}/build"
     ;;
   esac
 }
@@ -24,8 +24,8 @@ build_container_image() {
 push_container_image() {
   if [ -n "${registry}" ]; then
     echo "Pushing container image to registry ..."
-    ${CONTAINER_ENGINE} push ${registry_args} localhost/${IMAGE_NAME} \
-      ${registry}/${IMAGE_NAME}
+    ${CONTAINER_ENGINE} push "${registry_args}" "localhost/${IMAGE_NAME}" \
+      "${registry}/${IMAGE_NAME}"
   fi
 }
 
