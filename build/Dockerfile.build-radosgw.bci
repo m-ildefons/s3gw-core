@@ -1,0 +1,94 @@
+FROM registry.suse.de/suse/containers/sle-server/15/containers/bci/bci-base:15.3
+
+RUN zypper --non-interactive ar -p 100 \
+      https://download.opensuse.org/repositories/devel:/tools/15.3/ devel:tools \
+ && zypper --non-interactive ar -p 100 \
+      https://download.opensuse.org/distribution/leap/15.3/repo/oss leap:15.3 \
+ && zypper --non-interactive ar -p 80\
+      https://download.opensuse.org/update/leap/15.3/sle sle:15.3 \
+ && zypper --non-interactive ar -p 50 \
+      http://download.suse.de/ibs/SUSE:/SLE-15-SP3:/GA/standard/ ga:15.3 \
+ && zypper --non-interactive ar -p 50 \
+      http://download.suse.de/ibs/SUSE:/SLE-15-SP3:/Update:/Products:/SES7/standard/ ses:7 \
+ && zypper --non-interactive --no-gpg-checks ref
+
+RUN zypper -n install --no-recommends \
+      'cmake>3.5' \
+      'fmt-devel>=6.2.1' \
+      'gperftools-devel>=2.4' \
+      'libblkid-devel>=2.17' \
+      'liblz4-devel>=1.7' \
+      'pkgconfig(systemd)' \
+      'pkgconfig(libudev)' \
+      'pkgconfig(udev)' \
+      autoconf \
+      automake \
+      babeltrace-devel \
+      ccache \
+      cunit-devel \
+      fdupes \
+      fuse-devel \
+      gcc11-c++ \
+      gcc11\
+      git \
+      golang-github-prometheus-prometheus \
+      gperf \
+      jq \
+      keyutils-devel \
+      libaio-devel \
+      libboost_system1_66_0-devel \
+      libbz2-devel \
+      libcap-ng-devel \
+      libcryptsetup-devel \
+      libcurl-devel \
+      libexpat-devel \
+      libicu-devel \
+      libnl3-devel \
+      liboath-devel \
+      libopenssl-devel \
+      libpmem-devel \
+      libpmemobj-devel \
+      libthrift-devel \
+      libtool \
+      libxml2-devel \
+      lttng-ust-devel \
+      lua53-devel \
+      lua53-luarocks \
+      make \
+      memory-constraints \
+      mozilla-nss-devel \
+      nasm \
+      ncurses-devel \
+      net-tools \
+      ninja \
+      openldap2-devel \
+      patch \
+      pkg-config \
+      python3 \
+      python3-Cython \
+      python3-PrettyTable \
+      python3-PyYAML \
+      python3-Sphinx \
+      python3-setuptools \
+      rdma-core-devel \
+      re2-devel \
+      snappy-devel \
+      sqlite3-devel \
+      sudo \
+      systemd-rpm-macros \
+      update-alternatives \
+      valgrind-devel \
+      xfsprogs-devel \
+      xmlstarlet \
+ && zypper clean --all \
+ && update-alternatives \
+      --install /usr/bin/gcc gcc /usr/bin/gcc-11 50; \
+    update-alternatives \
+      --install /usr/bin/g++ g++ /usr/bin/g++-11 50; \
+    update-alternatives \
+      --install /usr/bin/c++ c++ /usr/bin/g++-11 50
+
+COPY build-radosgw.sh /usr/bin/build-radosgw.sh
+
+VOLUME ["/srv/ceph"]
+ENTRYPOINT ["/usr/bin/build-radosgw.sh"]

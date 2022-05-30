@@ -26,8 +26,6 @@ build_radosgw_binary() {
 
   cd ${CEPH_DIR}
 
-  ./install-deps.sh || true
-
   if [ -d "build" ]; then
       cd build/
       cmake -DBOOST_J=${NPROC} ${CEPH_CMAKE_ARGS} ..
