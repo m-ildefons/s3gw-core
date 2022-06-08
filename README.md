@@ -1,4 +1,5 @@
 # s3gw core
+![GitHub](https://img.shields.io/github/license/aquarist-labs/s3gw-core?style=for-the-badge)
 
 S3-compatible Gateway based on Ceph RGW, using a non-RADOS backend for
 standalone usage.
