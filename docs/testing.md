@@ -9,7 +9,6 @@ existing gateway running somewhere accessible by the tests. This may be an
 matter whether these running on the local machine or on a remote host, as long
 as they are accessible to the tests.
 
-
 ## smoke tests
 
 Basic test battery to smoke out errors and potential regressions.
@@ -73,5 +72,3 @@ The test will run `wrap` 3 times, for object sizes of 1MiB, 10MiB, and 100MiB.
 Each time `wrap` is run, a file will be created containing the results of
 the benchmark. This file can later on be used to compare results between runs.
 For more information, please check `warp`'s help.
-
-
