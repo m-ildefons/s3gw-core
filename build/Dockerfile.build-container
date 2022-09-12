@@ -1,5 +1,10 @@
 FROM opensuse/tumbleweed
-LABEL Name=s3gw
+LABEL \
+  org.opencontainers.image.title="S3GW" \
+  org.opencontainers.image.description="Standalone Open Source S3 Service" \
+  org.opencontainers.image.licenses="Apache-2.0" \
+  org.opencontainers.image.vendor="SUSE LLC." \
+  org.opencontainers.image.documentation="https://s3gw-docs.readthedocs.io"
 
 ARG ID=s3gw
 ENV ID=${ID}
